@@ -1,0 +1,27 @@
+{
+  "name": "tell.mc",
+  "version": "0.1.0",
+  "description": "A markdown-like language to generate JSON for Minecraft's tellraw command.",
+  "main": "parser.mjs",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  },
+  "scripts": {
+    "test": "mocha ./test/index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ginsm/tell"
+  },
+  "keywords": [
+    "tellraw",
+    "tell.mc",
+    "language",
+    "minecraft",
+    "markdown-like"
+  ],
+  "author": "Ginsm",
+  "license": "ISC"
+}

@@ -6,7 +6,7 @@ import { parseLines, parseLine } from '../../src/parser.mjs';
 describe('parser.mjs: parseLines', () => {
   it('Creates variables and assigns them in state', () => {
     assert.deepEqual(
-      parseLines(["$test=one", "$test2=two"]).variables,
+      parseLines(["$test=one", " $test2=two"]).variables,
       { test: "one", test2: "two" },
     );
   });

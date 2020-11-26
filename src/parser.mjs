@@ -1,11 +1,5 @@
 import methods from './methods.mjs';
 
-const lines = [
-  "$test=one",
-  "%c[blue] t[$test, two, three]",
-  "$another=variable",
-];
-
 export function parseLines(lines) {
   const state = {
     variables: {},
@@ -14,18 +8,14 @@ export function parseLines(lines) {
   }
 
   for (const line of lines) {
-    if (line.trim()[0] === "$") {
-      const trimmed = line.trim();
-
-      let variable = '';
+    if (trim(line)[0] === "$") {
+      let prop = '';
       let value = '';
+      const trimmed = trim(line);
 
       for (const id in trimmed) {
-        if (id === '0') {
-          continue;
-        }
-
-        const ch = line[id];
+        if (id === '0') continue;
+        const ch = trimmed[id];
 
         if (ch === '=') {
           state.processingValue = true;
@@ -33,9 +23,10 @@ export function parseLines(lines) {
         }
 
         if (state.processingValue) value += ch;
-        else variable += ch;
+        else prop += ch;
       }
-      state.variables[variable] = value;
+
+      state.variables[prop] = value;
       state.processingValue = false;
     } else {
 
@@ -44,8 +35,6 @@ export function parseLines(lines) {
 
   return state;
 }
-
-console.log(parseLines(lines));
 
 export function parseLine(line, variables = {}) {
   const state = {
@@ -85,4 +74,10 @@ export function parseLine(line, variables = {}) {
   }
 
   return state;
+}
+
+// Remove only leading spaces
+function trim(str) {
+  if (!str) return str;
+  return str.replace(/^\s+/g, '');
 }

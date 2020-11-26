@@ -20,10 +20,10 @@ export default {
   //   Generic Text Formatting    //
   // ---------------------------- //
 
-  text: type.generic('text'),
   t: type.generic('text'),
-  font: type.generic('font', 'minecraft:default'),
+  text: type.generic('text'),
   f: type.generic('font', 'minecraft:default'),
+  font: type.generic('font', 'minecraft:default'),
   c: type.generic('color', 'white'),
   color: type.generic('color', 'white'),
   b: type.generic('bold'),
@@ -57,8 +57,8 @@ export default {
   // Hover Events
   tip: type.event('hover', 'show_text'),
   tooltip: type.event('hover', 'show_text'),
-  item: type.event('hover', 'show_item'),
-  showitem: type.event('hover', 'show_item'),
-  entity: type.event('hover', 'show_entity'),
-  showentity: type.event('hover', 'show_entity'),
+  tipitem: type.event('hover', 'show_item'),
+  tooltipitem: type.event('hover', 'show_item'),
+  tipentity: type.event('hover', 'show_entity'),
+  tooltipentity: type.event('hover', 'show_entity'),
 };

@@ -1,3 +1,3 @@
 # tell
 
-A markdown-like language to generate JSON for Minecraft's tellraw command.
+A markdown-inspired language to generate JSON for Minecraft's tellraw command.

@@ -1,5 +1,5 @@
 {
-  "name": "tell.mc",
+  "name": "tell",
   "version": "0.1.0",
   "description": "A markdown-like language to generate JSON for Minecraft's tellraw command.",
   "main": "parser.mjs",

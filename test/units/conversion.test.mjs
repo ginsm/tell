@@ -19,14 +19,12 @@ describe('methods.mjs: type.generic', () => {
       { color: 'white' },
     );
   });
-
 });
 
 
 
 
 describe('methods.mjs: type.event', () => {
-
   it('Creates a function that creates a tellraw event property.', () => {
     assert.deepEqual(
       type.event('click', 'copy_to_clipboard', true)({}, 'Click to Copy'),
@@ -52,5 +50,4 @@ describe('methods.mjs: type.event', () => {
       { clickEvent: { action: 'copy_to_clipboard', value: '' } },
     );
   });
-
 });

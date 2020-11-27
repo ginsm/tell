@@ -1,13 +1,13 @@
 import Chai from 'chai';
 const { assert } = Chai;
 
-import { parseLines, parseLine } from '../../src/parser.mjs';
+import { parseMultipleLines, parseSingleLine } from '../../src/parser.mjs';
 
-describe('parser.mjs: parseLines', () => {
-  it('Creates variables and assigns them in state', () => {
+describe('parser.mjs: parseMultipleLines', () => {
+  it('Creates variables and assigns them in state.', () => {
     assert.deepEqual(
-      parseLines(["$test=one", " $test2=two"]).variables,
-      { test: "one", test2: "two" },
+      parseMultipleLines(["$test=one", " $test2=two"]).variables,
+      { "$test": "one", "$test2": "two" },
     );
   });
 });

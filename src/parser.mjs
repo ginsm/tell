@@ -1,48 +1,44 @@
-import methods from './methods.mjs';
+import convert from './conversion.mjs';
+import {
+  initializeVariable,
+  insertVariablesInPlace,
+} from './variables.mjs';
 
-export function parseLines(lines) {
+
+
+export function parseMultipleLines(lines) {
   const state = {
     variables: {},
-    processingValue: false,
-    lines: [],
+    blocks: [],
   }
 
-  for (const line of lines) {
-    if (trim(line)[0] === "$") {
-      let prop = '';
-      let value = '';
-      const trimmed = trim(line);
-
-      for (const id in trimmed) {
-        if (id === '0') continue;
-        const ch = trimmed[id];
-
-        if (ch === '=') {
-          state.processingValue = true;
-          continue;
-        }
-
-        if (state.processingValue) value += ch;
-        else prop += ch;
-      }
-
-      state.variables[prop] = value;
-      state.processingValue = false;
-    } else {
-
+  for (let line of lines) {
+    if (/\$.+=.+$/.test(line)) {
+      initializeVariable(line, state);
+      continue;
     }
+
+    line = insertVariablesInPlace(line, state.variables);
+
+    console.log(line);
   }
 
   return state;
 }
 
-export function parseLine(line, variables = {}) {
+
+export function parseSingleLine(line, variables = {}) {
   const state = {
-    block: false,
+    parsing: {
+      block: false,
+      variable: false,
+      argument: false,
+      embedded: false,
+    },
     blocks: [],
-    argumentBlock: [],
-    command: '',
-    arguments: '',
+    bracket: [],
+    method: '',
+    argument: '',
   }
 
   for (const ch of line) {
@@ -50,34 +46,22 @@ export function parseLine(line, variables = {}) {
 
       // %% denotes a block
       case '%':
-        if (!state.argumentBlock) {
-          if (state.block) {
-            state.block = false;
-          } else {
-            state.block = true;
-            state.blocks.push({});
-          }
-        }
         break;
 
       // [] denotes an argument block
       case '[':
-        state.argumentBlock.push(1);
-        if (state.argumentBlock)
-          break;
-
-      case ']':
-        state.argumentBlock.pop();
-
         break;
+      case ']':
+        break;
+
+      // $ denotes a variable
+      case '$':
+        break;
+
+      default:
+
     }
   }
 
   return state;
-}
-
-// Remove only leading spaces
-function trim(str) {
-  if (!str) return str;
-  return str.replace(/^\s+/g, '');
 }

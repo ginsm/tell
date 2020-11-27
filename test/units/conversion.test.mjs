@@ -2,18 +2,18 @@
 import Chai from 'chai';
 const { assert } = Chai;
 
-import { type } from '../../src/methods.mjs';
+import { type } from '../../src/conversion.mjs';
 
 
 describe('methods.mjs: type.generic', () => {
-  it('Creates a function that creates a tellraw property', () => {
+  it('Creates a function that creates a tellraw property.', () => {
     assert.deepEqual(
       type.generic('color', 'white')({}, 'green'),
       { color: 'green' },
     );
   });
 
-  it('Uses default passed through defaultOption parameter', () => {
+  it('Uses default passed through defaultOption parameter.', () => {
     assert.deepEqual(
       type.generic('color', 'white')({}),
       { color: 'white' },
@@ -27,7 +27,7 @@ describe('methods.mjs: type.generic', () => {
 
 describe('methods.mjs: type.event', () => {
 
-  it('Creates a function that creates a tellraw event property', () => {
+  it('Creates a function that creates a tellraw event property.', () => {
     assert.deepEqual(
       type.event('click', 'copy_to_clipboard', true)({}, 'Click to Copy'),
       {
@@ -39,14 +39,14 @@ describe('methods.mjs: type.event', () => {
     );
   });
 
-  it('ignoreEmpty set to true returns false given no value', () => {
+  it('ignoreEmpty set to true returns false given no value.', () => {
     assert.equal(
       type.event('click', 'copy_to_clipboard', true)({}),
       false,
     );
   });
 
-  it('ignoreEmpty set to false creates empty-value tellraw events', () => {
+  it('ignoreEmpty set to false creates empty-value tellraw events.', () => {
     assert.deepEqual(
       type.event('click', 'copy_to_clipboard')({}),
       { clickEvent: { action: 'copy_to_clipboard', value: '' } },

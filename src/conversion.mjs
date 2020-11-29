@@ -22,6 +22,8 @@ export default {
 
   t: type.generic('text'),
   text: type.generic('text'),
+  v: type.generic('value'),
+  value: type.generic('value'),
   f: type.generic('font', 'minecraft:default'),
   font: type.generic('font', 'minecraft:default'),
   c: type.generic('color', 'white'),
@@ -36,6 +38,8 @@ export default {
   strikethrough: type.generic('strikethrough'),
   o: type.generic('obfuscated'),
   obfuscated: type.generic('obfuscated'),
+  insert: type.generic('insertion'),
+  insertion: type.generic('insertion'),
 
 
   // ---------------------------- //
@@ -55,10 +59,10 @@ export default {
   changepage: type.event('click', 'change_page', true),
 
   // Hover Events
-  tip: type.event('hover', 'show_text'),
-  tooltip: type.event('hover', 'show_text'),
-  tipitem: type.event('hover', 'show_item'),
-  tooltipitem: type.event('hover', 'show_item'),
-  tipentity: type.event('hover', 'show_entity'),
-  tooltipentity: type.event('hover', 'show_entity'),
+  hov: type.event('hover', 'show_text'),
+  hover: type.event('hover', 'show_text'),
+  hovitem: type.event('hover', 'show_item'),
+  hoveritem: type.event('hover', 'show_item'),
+  hoventity: type.event('hover', 'show_entity'),
+  hoverentity: type.event('hover', 'show_entity'),
 };

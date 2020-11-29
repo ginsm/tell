@@ -20,7 +20,6 @@ export function parseMultipleLines(lines) {
     }
 
     line = insertVariablesInPlace(line, state.variables);
-
     state.blocks.push(parseSingleLine(line));
   }
 
@@ -63,7 +62,6 @@ export function parseSingleLine(line) {
       case '[':
         if (ch === '[') {
           state.bracket.push('[');
-
           if (!state.parsing.argument) {
             state.parsing.argument = true;
             break;
@@ -75,9 +73,8 @@ export function parseSingleLine(line) {
       case ']':
         if (ch === ']') {
           state.bracket.pop();
-
           if (state.parsing.argument && state.bracket.length === 0) {
-            // Method processing
+            // Method invocation
             if (convert.hasOwnProperty(state.method)) {
               if (state.parsing.embeddedBlock) {
                 state.argument = parseSingleLine(state.argument)[0];
@@ -90,9 +87,12 @@ export function parseSingleLine(line) {
               break;
             }
 
+            // Ignore any invalid methods
             else {
-              console.log(state, line);
-              throw new Error(`Method ${state.method} does not exist.`);
+              state.method = ''
+              state.argument = ''
+              state.parsing.argument = false;
+              state.parsing.embeddedBlock = false;
             }
           }
         }

@@ -5,7 +5,7 @@ const { assert } = Chai;
 import { type } from '../../src/conversion.mjs';
 
 
-describe('methods.mjs: type.generic', () => {
+describe('conversion.mjs: type.generic', () => {
   it('Creates a function that creates a tellraw property.', () => {
     assert.deepEqual(
       type.generic('color', 'white')({}, 'green'),
@@ -24,7 +24,7 @@ describe('methods.mjs: type.generic', () => {
 
 
 
-describe('methods.mjs: type.event', () => {
+describe('conversion.mjs: type.event', () => {
   it('Creates a function that creates a tellraw event property.', () => {
     assert.deepEqual(
       type.event('click', 'copy_to_clipboard', true)({}, 'Click to Copy'),

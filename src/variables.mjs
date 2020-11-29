@@ -1,6 +1,7 @@
 export function insertVariablesInPlace(line, variables = {}) {
   for (const variable in variables) {
-    line = line.replace(variable, variables[variable]);
+    const regex = new RegExp(`(\\${variable})`, 'g');
+    line = line.replace(regex, variables[variable]);
   }
   return line;
 }

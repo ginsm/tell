@@ -12,26 +12,27 @@ describe('parser.mjs: parseMultipleLines', () => {
   });
 });
 
-// describe('parser.mjs: parseLine', () => {
+describe('parser.mjs: parseLine', () => {
 
-//   it('ignores [ and ] in arguments', () => {
-//     assert.deepEqual(
-//       parseLine('%t[[Text]]%'),
-//       { text: "[Text]" }
-//     );
-//   });
+  it('ignores [ and ] in argument blocks', () => {
+    assert.deepEqual(
+      parseSingleLine('%t[[Text]]%'),
+      [{ text: "[Text]" }]
+    );
+  });
 
-//   it('supports embedded blocks in arguments', () => {
-//     assert.deepEqual(
-//       parseLine('%copy[%c[purple] t[Click to Copy]%'),
-//       {
-//         clickEvent: {
-//           action: 'copy_to_clipboard',
-//           text: { color: 'purple', text: 'Click to Copy' },
-//         },
-//       },
-//     );
-//   });
+  it('supports embedded blocks in arguments', () => {
+    assert.deepEqual(
+      parseSingleLine('%t[[Copy Me]] hover[%c[green] t[Click to Copy]%]%'),
+      [{
+        text: "[Copy Me]",
+        hoverEvent: {
+          action: 'show_text',
+          value: { color: 'green', text: 'Click to Copy' },
+        },
+      }],
+    );
+  });
 
-// });
+});
 

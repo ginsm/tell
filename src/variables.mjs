@@ -1,6 +1,6 @@
 export function insertVariablesInPlace(line, variables = {}) {
   for (const variable in variables) {
-    const regex = new RegExp(`(\\${variable})`, 'g');
+    const regex = new RegExp(`\\${variable}`, 'g');
     line = line.replace(regex, variables[variable]);
   }
   return line;
@@ -32,7 +32,10 @@ export function initializeVariable(line, parentState) {
     }
   }
 
-  parentState.variables[state.prop.trim()] = state.value;
+  if (state.value) {
+    parentState.variables[state.prop.trim()] = state.value;
+  }
+
   return parentState;
 }
 

@@ -1,21 +1,21 @@
-// Note: I decided to test the type methods as all other methods are composed using them.
+// Note: I decided to test the curry methods as all other methods are composed using them.
 import Chai from 'chai';
 const { assert } = Chai;
 
-import { type } from '../../src/conversion.mjs';
+import { curry } from '../../src/util/conversion.util.mjs';
 
 
-describe('conversion.mjs: type.generic', () => {
+describe('conversion.mjs: curry.generic', () => {
   it('Creates a function that creates a tellraw property.', () => {
     assert.deepEqual(
-      type.generic('color', 'white')({}, 'green'),
+      curry.generic({ prop: 'color', _default: 'white' })({}, 'green'),
       { color: 'green' },
     );
   });
 
   it('Uses default passed through defaultOption parameter.', () => {
     assert.deepEqual(
-      type.generic('color', 'white')({}),
+      curry.generic({ prop: 'color', _default: 'white' })({}),
       { color: 'white' },
     );
   });
@@ -24,10 +24,10 @@ describe('conversion.mjs: type.generic', () => {
 
 
 
-describe('conversion.mjs: type.event', () => {
+describe('conversion.mjs: curry.event', () => {
   it('Creates a function that creates a tellraw event property.', () => {
     assert.deepEqual(
-      type.event('click', 'copy_to_clipboard', true)({}, 'Click to Copy'),
+      curry.event({ type: 'click', action: 'copy_to_clipboard', ignoreEmpty: true })({}, 'Click to Copy'),
       {
         clickEvent: {
           action: 'copy_to_clipboard',
@@ -39,14 +39,14 @@ describe('conversion.mjs: type.event', () => {
 
   it('ignoreEmpty set to true returns false given no value.', () => {
     assert.equal(
-      type.event('click', 'copy_to_clipboard', true)({}),
+      curry.event({ type: 'click', action: 'copy_to_clipboard', ignoreEmpty: true })({}),
       false,
     );
   });
 
   it('ignoreEmpty set to false creates empty-value tellraw events.', () => {
     assert.deepEqual(
-      type.event('click', 'copy_to_clipboard')({}),
+      curry.event({ type: 'click', action: 'copy_to_clipboard' })({}),
       { clickEvent: { action: 'copy_to_clipboard', value: '' } },
     );
   });

@@ -1,7 +1,7 @@
 export const curry = {
-  generic: ({ prop = '', _default = '' }) => {
-    return (obj = {}, value = _default) => {
-      obj[prop] = (value || _default);
+  generic: ({ prop = '', fallback = '' }) => {
+    return (obj = {}, value = fallback) => {
+      obj[prop] = (value || fallback);
       return obj;
     };
   },
@@ -15,7 +15,7 @@ export const curry = {
   },
 };
 
-export const assignMethodAlias = (obj, aliases = {}) => {
+export const assignMethodAliases = (obj, aliases = {}) => {
   for (const [key, value] of Object.entries(aliases)) {
     obj[key] = obj[value];
   }

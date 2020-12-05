@@ -18,7 +18,6 @@ export function parseMultipleLines(lines) {
       initializeVariable(line, state);
       continue;
     }
-
     line = insertVariablesInPlace(line, state.variables);
     state.blocks.push(parseSingleLine(line));
   }
@@ -32,17 +31,30 @@ export function parseSingleLine(line) {
     parsing: {
       block: false,
       argument: false,
-      embeddedBlock: false,
+      nestedBlock: false,
     },
     block: {},
     blocks: [],
-    bracket: [],
+    brackets: [],
     method: '',
     argument: '',
+    leadingEscapeCharacter: false,
   }
 
   for (const ch of line) {
+    // Handle escaped characters
+    if (state.leadingEscapeCharacter) {
+      if (state.parsing.argument) {
+        state.argument += ch;
+      }
+      state.leadingEscapeCharacter = false;
+      continue;
+    }
+
     switch (ch) {
+      case '\\':
+        state.leadingEscapeCharacter = true;
+        break;
       // %% denotes a block
       case '%':
         if (!state.parsing.argument) {
@@ -55,30 +67,27 @@ export function parseSingleLine(line) {
         }
 
         if (state.parsing.argument) {
-          state.parsing.embeddedBlock = true;
+          state.parsing.nestedBlock = true;
         }
-
       // [ denotes an argument block is starting
       case '[':
         if (ch === '[') {
-          state.bracket.push('[');
+          state.brackets.push('[');
           if (!state.parsing.argument) {
             state.parsing.argument = true;
             break;
           }
         }
-
-
       // ] denotes an argument block is ending
       case ']':
         if (ch === ']') {
-          state.bracket.pop();
-          if (state.parsing.argument && state.bracket.length === 0) {
+          state.brackets.pop();
+          if (state.parsing.argument && state.brackets.length === 0) {
             // Method invocation
             if (convert.hasOwnProperty(state.method)) {
-              if (state.parsing.embeddedBlock) {
+              if (state.parsing.nestedBlock) {
                 state.argument = parseSingleLine(state.argument)[0];
-                state.parsing.embeddedBlock = false;
+                state.parsing.nestedBlock = false;
               }
               convert[state.method](state.block, state.argument);
               state.method = '';
@@ -86,17 +95,15 @@ export function parseSingleLine(line) {
               state.parsing.argument = false;
               break;
             }
-
             // Ignore any invalid methods
             else {
               state.method = ''
               state.argument = ''
               state.parsing.argument = false;
-              state.parsing.embeddedBlock = false;
+              state.parsing.nestedBlock = false;
             }
           }
         }
-
       // Handle any other type of character
       default:
         if (state.parsing.block) {
@@ -104,7 +111,6 @@ export function parseSingleLine(line) {
             state.argument += ch;
             break;
           }
-
           if (ch !== ' ') {
             state.method += ch;
           }

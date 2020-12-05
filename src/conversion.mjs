@@ -26,10 +26,10 @@ const methods = {
   selector: curry.generic({ prop: 'selector' }),
   keybind: curry.generic({ prop: 'keybind' }),
   nbt: curry.generic({ prop: 'nbt' }),
-  block: curry.generate({ prop: 'block' }),
-  entity: curry.genreate({ prop: 'entity' }),
-  storage: curry.generate({ prop: 'storage' }),
-  extra: curry.generate({ prop: 'extra' }),
+  block: curry.generic({ prop: 'block' }),
+  entity: curry.generic({ prop: 'entity' }),
+  storage: curry.generic({ prop: 'storage' }),
+  extra: curry.generic({ prop: 'extra' }),
 
   // Shift Click Event
   insertion: curry.generic({ prop: 'insertion' }), // appends text to user's chatbox

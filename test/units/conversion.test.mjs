@@ -8,14 +8,14 @@ import { curry } from '../../src/util/conversion.util.mjs';
 describe('conversion.mjs: curry.generic', () => {
   it('Creates a function that creates a tellraw property.', () => {
     assert.deepEqual(
-      curry.generic({ prop: 'color', _default: 'white' })({}, 'green'),
+      curry.generic({ prop: 'color', fallback: 'white' })({}, 'green'),
       { color: 'green' },
     );
   });
 
   it('Uses default passed through defaultOption parameter.', () => {
     assert.deepEqual(
-      curry.generic({ prop: 'color', _default: 'white' })({}),
+      curry.generic({ prop: 'color', fallback: 'white' })({}),
       { color: 'white' },
     );
   });
